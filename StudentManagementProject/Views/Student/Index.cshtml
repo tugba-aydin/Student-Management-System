@@ -1,0 +1,108 @@
+﻿@model List<StudentManagementProject.Models.Domain.Student>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h3 class="text-center mb-4 mt-4">Student List</h3>
+<h5 class="text-center">Please click to add a new student.</h5>
+<div class="text-center mb-3"><a href="/Student/Add" class="btn btn-success">Add Student</a></div>
+<div class="row align-items-center justify-content-center">
+    <div class="col-md-6">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row"></th>
+                        <td>@item.Firstname</td>
+                        <td>@item.Lastname</td>
+                        <td>@item.Email</td>
+                        <td>
+                            <a class="btn btn-primary mr-1" data-userid="@item.Id" data-username="@item.Firstname" data-usersurname="@item.Lastname"
+                           data-userbirthdate="@item.Birthdate" data-bs-toggle="modal" data-bs-target="#detailsModal">Details</a>
+                            <a class="btn btn-warning mr-1" href="/Student/Edit/@item.Id">Update</a>
+                            <a class="btn btn-danger" data-username="@item.Firstname" data-userid="@item.Id" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>Student Information</h5>
+                <p id="detailsUser">
+                    <span>
+                        Name: <span id="detailsusername"></span> <br />
+                        Surnama: <span id="detailsusersurname"></span><br />
+                        Birhday: <span id="detailsuserbirthday"></span><br />
+                        Display Student Course <a id="detailsUserCourseUrl">Click</a>.
+                    </span>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span>
+                    Are your sure delete <span id="deleteUsername">
+                    </span> student?
+                </span>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="#" id="deleteUrl" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var deleteModal = document.getElementById('deleteModal')
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        var username = button.getAttribute('data-username')
+        var userid = button.getAttribute('data-userid')
+        document.getElementById("deleteUsername").innerHTML = username;
+        document.getElementById("deleteUrl").setAttribute("href", `/Student/Delete/${userid}`);
+    })
+    var detailsModal = document.getElementById('detailsModal')
+    detailsModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget
+        var username = button.getAttribute('data-username')
+        var usersurname = button.getAttribute('data-usersurname')
+        var userbirthday = button.getAttribute('data-userbirthdate')
+        var userid = button.getAttribute('data-userid')
+        document.getElementById("detailsusername").innerHTML = username;
+        document.getElementById("detailsusersurname").innerHTML = usersurname;
+        document.getElementById("detailsuserbirthday").innerHTML = userbirthday;
+        document.getElementById("detailsUserCourseUrl").setAttribute("href", `/StudentCourse/Index/${userid}`);
+    })
+</script>

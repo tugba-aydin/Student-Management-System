@@ -1,0 +1,34 @@
+﻿@model StudentManagementProject.Models.Domain.Student
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h3 class="text-center mt-4">Student Update Page</h3>
+
+<div class="row justify-content-center align-items-center">
+    <div class="col-md-6 mt-2">
+        <form method="post" asp-controller="Student" asp-action="Update">
+            <div class="form-group col-md-6 offset-md-3">
+                <label for="Firstname">Name</label>
+                <input type="text" asp-for="Firstname" class="form-control" id="name" placeholder="Enter name">
+            </div>
+            <div class="form-group col-md-6 offset-md-3" mt-2">
+                <label for="Surname">Surname</label>
+                <input type="text" asp-for="Lastname" class="form-control" id="Surname" placeholder="Enter surname">
+            </div>
+            <div class="form-group col-md-6 offset-md-3" mt-2">
+                <label for="Email">Email</label>
+                <input type="email" asp-for="Email" class="form-control" id="Email" placeholder="Enter email">
+            </div>
+            <div class="form-group col-md-6 offset-md-3" mt-2">
+                <label for="Birth Date">Birth Date</label>
+                <input type="date" asp-for="Birthdate" class="form-control" id="Birth Date" placeholder="Enter birth date">
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="col-md-6 offset-md-3 mt-2">
+                <input type="submit" class="btn btn-primary" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
